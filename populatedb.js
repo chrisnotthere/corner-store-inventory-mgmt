@@ -36,6 +36,7 @@ function categoryCreate(name, description, image, cb) {
     cb(null, category);
   });
 }
+
 function productCreate(name, price, description, image, stock, category, cb) {
   productdetail = { name, price, description, image, stock, category };
 
@@ -116,85 +117,91 @@ function createproducts(cb) {
       function (callback) {
         productCreate(
           "Eggs (1 dozen)",
-		  4.11,
-          "Eggs have a hard shell of calcium carbonate enclosing a liquid white, a single yolk (or an occasional double yolk)and an air cell. The white or albumen is a clear liquid that turns to an opaque white when cooked or beaten.",
+          4.11,
+          "Eggs have a hard shell of calcium carbonate enclosing a liquid white, a single yolk (or an occasional double yolk)and an air cell.",
           "eggs.png",
+          15,
           categories[4],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Gala Apples",
-		  0.99,
+          0.99,
           "Super juicy and delicious.",
           "apples.png",
+          122,
           categories[0],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Bananas",
-		  1.79,
+          1.79,
           "The banana is a lengthy yellow fruit, found in the market in groups of three to twenty fruits, similar to a triangular cucumber, oblong and normally yellow.",
           "bananas.png",
+          87,
           categories[0],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Apple Fritter",
-		  0.89,
+          0.89,
           "Made with Gala Apples",
           "fritter.png",
+          12,
           categories[1],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Mango",
-		  14.99,
+          14.99,
           "Pricey but totally worth it!",
           "mango.png",
+          6,
           categories[0],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Latte",
-		  8.11,
+          8.11,
           "A latte or caffè latte is a milk coffee that boasts a silky layer of foam as a real highlight to the drink.",
           "eggs.png",
+          15,
           categories[3],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Kale",
-		  9.69,
+          9.69,
           "Perfect for salads and smoothies.",
           "kale02.png",
+          22,
           categories[2],
           callback
         );
       },
-	  function (callback) {
+      function (callback) {
         productCreate(
           "Bok Choy",
-		  7.52,
+          7.52,
           "Bok Choy, also called white Chinese cabbage, belongs to the leafy vegetable pak choi family of Chinese brassicas. Bok Choy has white or green, thick, crunchy stems with light to dark green wide leaves.",
           "bokchoy.png",
+          7,
           categories[2],
           callback
         );
       },
-	  
-
     ],
     // optional callback
     cb
