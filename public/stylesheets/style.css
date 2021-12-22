@@ -1,8 +1,43 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 2rem;
 }
 
 a {
-  color: #00B7FF;
+  color: white;
+}
+
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+div.cards {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+}
+
+div.card {
+  border-radius: 2rem;
+}
+
+div.card img {
+  border-radius: 2rem 2rem 0 0;
+}
+
+nav {
+  position: relative;
+  background-color: rgb(25, 165, 25);
+  padding: 1rem;
+  margin: -2rem -2rem 2rem -2rem;
+}
+
+#navtitle {
+  position: absolute;
+  left: 2rem;
+  font-weight: 600;
 }

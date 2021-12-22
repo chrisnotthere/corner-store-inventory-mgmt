@@ -2,4 +2,23 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to #[em Corner Store], your local shop for everyday necessities.
+
+  if error
+    p Error getting dynamic content.
+  else
+    p We currently carry #[strong !{data.product_count}] products in #[strong !{data.category_count}] categories.
+
+  div.cards
+    a(href='//google.com')
+      .card(style='width: 24rem;').text-center
+        img.card-img-top(src='/images/products.jpg' alt='products')
+        .card-body
+          p.card-text
+            | Shop by product
+    a(href='//google.com')
+      .card(style='width: 24rem;').text-center
+        img.card-img-top(src='/images/category.jpg' alt='category')
+        .card-body
+          p.card-text
+            | Shop by category
