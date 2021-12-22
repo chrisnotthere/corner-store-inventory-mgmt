@@ -40,9 +40,24 @@ exports.product_list = function (req, res, next) {
     });
 };
 
-// Display detail page for a specific product.
-exports.product_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: product detail: " + req.params.id);
+// Display product page for a specific product.
+exports.product_detail = function (req, res, next) {
+  Product.findById(req.params.id)
+    .populate("category")
+    .exec(function (err, results) {
+      //console.dir(results.name, { depth: null });
+      if (err) {
+        return next(err);
+      }
+      if (results.name == null) {
+        // No results.
+        var err = new Error("Product not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render.
+      res.render("product_detail", { title:results.name, results });
+    });
 };
 
 // Display product create form on GET.
