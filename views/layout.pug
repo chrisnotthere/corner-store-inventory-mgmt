@@ -11,13 +11,14 @@ html(lang='en')
   body
     nav
       ul.nav.justify-content-end
-        h3#navtitle Corner Store
+        a(href='/')
+          h3#navtitle Corner Store
         li.nav-item
-          a.nav-link(href='#') Home
+          a.nav-link(href='/') Home
         li.nav-item
-          a.nav-link(href='#') Products
+          a.nav-link(href='/store/products/') Products
         li.nav-item
-          a.nav-link(href='#') Categories
+          a.nav-link(href='/store/categories/') Categories
 
         
     block content

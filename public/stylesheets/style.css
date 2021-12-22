@@ -1,8 +1,10 @@
 body {
   padding: 2rem;
+  background-color: rgb(88, 88, 85);
+  color: white;
 }
 
-a {
+nav a {
   color: white;
 }
 
