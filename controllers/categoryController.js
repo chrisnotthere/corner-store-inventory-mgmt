@@ -1,3 +1,5 @@
+var async = require("async");
+var Product = require("../models/product");
 var Category = require("../models/category");
 
 // Display list of all Categories.
@@ -16,9 +18,35 @@ exports.category_list = function (req, res, next) {
     });
 };
 
-// Display detail page for a specific category.
-exports.category_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: category detail: " + req.params.id);
+// Display detail page for a category.
+exports.category_detail = function (req, res, next) {
+  async.parallel(
+    {
+      category: function (callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+      category_products: function (callback) {
+        Product.find({ category: req.params.id }, "name price").exec(callback);
+      },
+    },
+    function (err, results) {
+      console.dir(results)
+      if (err) {
+        return next(err);
+      } // Error in API usage.
+      if (results.category == null) {
+        // No results.
+        var err = new Error("Category not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render.
+      res.render("category_detail", {
+        title: "Category Detail",
+        results,
+      });
+    }
+  );
 };
 
 // Display category create form on GET.

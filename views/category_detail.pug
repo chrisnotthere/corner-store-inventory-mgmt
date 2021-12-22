@@ -1,0 +1,26 @@
+extends layout
+
+block content
+
+  h1 #{results.name}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 #{results.category.name}
+
+    p #{results.category.description}
+    p #[strong Image:] #{results.category.image}
+
+    dl
+      each product in results.category_products
+        dt
+          a(href=product.url) #{product.name}
+        dd #{product.price}
+
+      else
+        p This category has no products.
+
+
+
+
+  
