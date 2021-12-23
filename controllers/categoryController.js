@@ -178,11 +178,86 @@ exports.category_delete_post = function (req, res, next) {
 };
 
 // Display category update form on GET.
-exports.category_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: category update GET");
+exports.category_update_get = function (req, res, next) {
+  // Get category for form.
+  Category.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    if (results.url == null) {
+      // No results.
+      var err = new Error("category not found");
+      err.status = 404;
+      return next(err);
+    }
+    // Success.
+    res.render("category_form", {
+      title: "Update Category",
+      //category: results.category,
+      name: results.name,
+      description: results.description,
+    });
+  });
 };
 
 // Handle category update on POST.
-exports.category_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: category update POST");
-};
+exports.category_update_post = [
+  // Validate and sanitise fields.
+  body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+  body("description", "description must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a category object with escaped/trimmed data and old id.
+    var category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      image: req.body.image,
+      _id: req.params.id, //This is required, or a new ID will be assigned!
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages.
+
+      // Get category
+      Category.findById(req.params.id).exec(function (err, results) {
+        if (err) {
+          return next(err);
+        }
+        if (results.category == null) {
+          // No results.
+          var err = new Error("category not found");
+          err.status = 404;
+          return next(err);
+        }
+        // Success.
+        res.render("category_form", {
+          title: "Update Category",
+          category: results.category,
+          errors: errors.array(),
+        });
+      });
+      return;
+    } else {
+      // Data from form is valid. Update the record.
+      Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {},
+        function (err, thecategory) {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to product detail page.
+          res.redirect(thecategory.url);
+        }
+      );
+    }
+  },
+];
