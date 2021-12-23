@@ -158,13 +158,34 @@ exports.product_create_post = [
 ];
 
 // Display product delete form on GET.
-exports.product_delete_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: product delete GET");
+exports.product_delete_get = function (req, res, next) {
+  Product.findById(req.params.id)
+    .populate("category")
+    .exec(function (err, product) {
+      if (err) {
+        return next(err);
+      }
+      if (product == null) {
+        res.redirect("/store/products");
+      }
+      // successful, so render
+      res.render("product_delete", {
+        title: "Delete Product",
+        product,
+      });
+    });
 };
 
 // Handle product delete on POST.
-exports.product_delete_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: product delete POST");
+exports.product_delete_post = function (req, res, next) {
+  // Assume valid product id in field.
+  Product.findByIdAndRemove(req.body.id, function deleteproduct(err) {
+    if (err) {
+      return next(err);
+    }
+    // Success, so redirect to list of product items.
+    res.redirect("/store/products");
+  });
 };
 
 // Display product update form on GET.
