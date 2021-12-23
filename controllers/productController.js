@@ -222,15 +222,6 @@ exports.product_update_get = function (req, res, next) {
 
 // Handle product update on POST.
 exports.product_update_post = [
-  // Convert the genre to an array
-  (req, res, next) => {
-    if (!(req.body.genre instanceof Array)) {
-      if (typeof req.body.genre === "undefined") req.body.genre = [];
-      else req.body.genre = new Array(req.body.genre);
-    }
-    next();
-  },
-
   // Validate and sanitise fields.
   body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
   body("price").isNumeric().escape(),
