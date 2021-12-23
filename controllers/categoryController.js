@@ -32,7 +32,6 @@ exports.category_detail = function (req, res, next) {
       },
     },
     function (err, results) {
-      console.dir(results);
       if (err) {
         return next(err);
       } // Error in API usage.

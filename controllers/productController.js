@@ -46,7 +46,6 @@ exports.product_detail = function (req, res, next) {
   Product.findById(req.params.id)
     .populate("category")
     .exec(function (err, results) {
-      //console.dir(results.name, { depth: null });
       if (err) {
         return next(err);
       }
