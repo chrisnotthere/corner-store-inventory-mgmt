@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Name:
+      input#title.form-control(type='text', placeholder='Product Name' name='name' required='true' value=(undefined===product ? '' : product.name) )
+    div.form-group
+      label(for='price') Price:
+      input#title.form-control(type='number', placeholder='Product Price' name='price' required='true' value=(undefined===product ? '' : product.price) )
+    div.form-group
+      label(for='description') Description:
+      input#title.form-control(type='text', placeholder='Product Description' name='description' required='true' value=(undefined===product ? '' : product.description) )
+    div.form-group
+      label(for='stock') Stock:
+      input#title.form-control(type='number', placeholder='Stock available' name='stock' required='true' value=(undefined===product ? '' : product.stock) )
+    div.form-group
+      label(for='category') Category:
+      select#category.form-control(type='select', placeholder='Select category' name='category' required='true' )
+        for category in categories
+          option(value=category._id selected=false ) #{category.name}
+    input#image.form-control(type='hidden' name='image' required='true' value='newproduct.jpg' )
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
