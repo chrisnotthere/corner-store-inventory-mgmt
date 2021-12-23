@@ -20,7 +20,18 @@ block content
       label(for='category') Category:
       select#category.form-control(type='select', placeholder='Select category' name='category' required='true' )
         for category in categories
-          option(value=category._id selected=false ) #{category.name}
+          if product
+             //- Handle GET form, where product.category is an object, and POST form, where it is a string.
+             option(
+              value=category._id
+              selected=(
+                category._id.toString()==product.category._id
+                || category._id.toString()==product.category
+              ) ? 'selected' : false
+            ) #{category.name}
+          else
+            option(value=category._id) #{category.name}
+
     input#image.form-control(type='hidden' name='image' required='true' value='newproduct.jpg' )
     button.btn.btn-primary(type='submit') Submit
 
@@ -28,3 +39,5 @@ block content
     ul
       for error in errors
         li!= error.msg
+
+          //-option(value=category._id selected=false ) #{category.name}

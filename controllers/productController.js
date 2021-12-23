@@ -189,11 +189,125 @@ exports.product_delete_post = function (req, res, next) {
 };
 
 // Display product update form on GET.
-exports.product_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: product update GET");
+exports.product_update_get = function (req, res, next) {
+  // Get product and categories for form.
+  async.parallel(
+    {
+      product: function (callback) {
+        Product.findById(req.params.id).populate("category").exec(callback);
+      },
+      categories: function (callback) {
+        Category.find(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.product == null) {
+        // No results.
+        var err = new Error("product not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Success.
+      res.render("product_form", {
+        title: "Update product",
+        categories: results.categories,
+        product: results.product,
+      });
+    }
+  );
 };
 
 // Handle product update on POST.
-exports.product_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: product update POST");
-};
+exports.product_update_post = [
+  // Convert the genre to an array
+  (req, res, next) => {
+    if (!(req.body.genre instanceof Array)) {
+      if (typeof req.body.genre === "undefined") req.body.genre = [];
+      else req.body.genre = new Array(req.body.genre);
+    }
+    next();
+  },
+
+  // Validate and sanitise fields.
+  body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+  body("price").isNumeric().escape(),
+  body("description", "description must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("stock").trim().isNumeric().escape(),
+  body("category", "category must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a product object with escaped/trimmed data and old id.
+    var product = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      stock: req.body.stock,
+      category: req.body.category,
+      image: req.body.image,
+      _id: req.params.id, //This is required, or a new ID will be assigned!
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages.
+
+      // Get product and all categories
+      async.parallel(
+        {
+          product: function (callback) {
+            Product.findById(req.params.id).populate("category").exec(callback);
+          },
+          categories: function (callback) {
+            Category.find(callback);
+          },
+        },
+        function (err, results) {
+          if (err) {
+            return next(err);
+          }
+          if (results.product == null) {
+            // No results.
+            var err = new Error("product not found");
+            err.status = 404;
+            return next(err);
+          }
+          // Success.
+          res.render("product_form", {
+            title: "Update product",
+            categories: results.categories,
+            category: results.category,
+            product: results.product,
+            errors: errors.array(),
+          });
+        }
+      );
+      return;
+    } else {
+      // Data from form is valid. Update the record.
+      Product.findByIdAndUpdate(
+        req.params.id,
+        product,
+        {},
+        function (err, theproduct) {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to product detail page.
+          res.redirect(theproduct.url);
+        }
+      );
+    }
+  },
+];
