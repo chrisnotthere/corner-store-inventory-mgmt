@@ -9,16 +9,17 @@ block content
   else
     p We currently carry #[strong !{data.product_count}] products in #[strong !{data.category_count}] categories.
 
-  div.cards
+  div.index-cards
     a(href='/store/products/')
       .card(style='width: 24rem;').text-center
         img.card-img-top(src='/images/products.jpg' alt='products')
         .card-body
           p.card-text
-            | Shop by product
+            | Shop by Product
     a(href='/store/categories/')
       .card(style='width: 24rem;').text-center
         img.card-img-top(src='/images/category.jpg' alt='category')
         .card-body
           p.card-text
-            | Shop by category
+            | Shop by Category
+

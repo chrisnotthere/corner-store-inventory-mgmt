@@ -15,7 +15,7 @@ block content
       each product in results.category_products
         dt
           a(href=product.url) #{product.name}
-        dd #{product.price}
+        dd $#{product.price}
 
       else
         p This category has no products.
