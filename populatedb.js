@@ -202,6 +202,94 @@ function createproducts(cb) {
           callback
         );
       },
+      function (callback) {
+        productCreate(
+          "Butter",
+          7.89,
+          "Butter is a dairy product made from the fat and protein components of churned cream. It is a semi-solid emulsion at room temperature, consisting of approximately 80% butterfat.",
+          "butter14.jpg",
+          5,
+          categories[4],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Cheese",
+          100.99,
+          "Cheese is valued for its portability, long shelf life, and high content of fat, protein, calcium, and phosphorus.",
+          "cheesy.png",
+          14,
+          categories[4],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Ice Creame",
+          15.99,
+          "Ice cream is a sweetened frozen food typically eaten as a snack or dessert.",
+          "icecreame.png",
+          7,
+          categories[4],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Cappuccino",
+          7.89,
+          "The name comes from the Capuchin friars, referring to the colour of their habits.",
+          "cappa.png",
+          128,
+          categories[3],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Cold Brew Coffee",
+          6.99,
+          "Cold brewing, also called cold water extraction or cold pressing, is the process of steeping coffee grounds in water at cool temperatures for an extended period.",
+          "coldcoffee.png",
+          16,
+          categories[3],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Espresso",
+          4.11,
+          "Espresso is generally thicker than coffee brewed by other methods, with a viscosity of warm honey.",
+          "espresso.png",
+          85,
+          categories[3],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Artichoke",
+          19.69,
+          "The edible portion of the plant consists of the flower buds before the flowers come into bloom.",
+          "artichoke99.png",
+          35,
+          categories[2],
+          callback
+        );
+      },
+      function (callback) {
+        productCreate(
+          "Broccoli",
+          4.53,
+          "It is eaten either raw or cooked. Broccoli is a particularly rich source of vitamin C and vitamin K.",
+          "brocco.png",
+          17,
+          categories[2],
+          callback
+        );
+      },
     ],
     // optional callback
     cb
